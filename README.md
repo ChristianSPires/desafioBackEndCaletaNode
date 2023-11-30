@@ -28,8 +28,28 @@ This Node.js application with Express and MariaDB implements a digital wallet sy
 
     - Ensure MariaDB is installed and running.
     - Create a database named `digital_wallet`.
-    - Create a table name transactions
-    - if you prefer, run docker!
+    - Create the tables:
+
+    ```plaintext
+    CREATE TABLE IF NOT EXISTS players (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    balance DECIMAL(10, 2) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS transactions (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    playerId BIGINT,
+    value DECIMAL(10, 2) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    canceled BOOLEAN NOT NULL,
+    FOREIGN KEY (playerId) REFERENCES players(id)
+    );
+    ```
+    - Populate the tables:
+
+    ```plaintext
+    INSERT INTO players (balance) VALUES (1000.00);
+    ```
 
 4. **Run the application:**
 
@@ -37,7 +57,7 @@ This Node.js application with Express and MariaDB implements a digital wallet sy
     npm start
     ```
 
-The application will be running on [http://localhost:8080/](http://localhost:8080/).
+The application will be running on [http://localhost:8080/player](http://localhost:8080/player).
 
 ## Endpoints
 
